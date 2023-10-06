@@ -33,11 +33,11 @@ TEST(RecordIdTest, Equals) {
     EXPECT_NE(hrid4, hrid2);
 }
 
-//TEST(RecordIdTest, HashCode) {
-//    db::HeapPageId hpid(-1, 2);
-//    db::RecordId hrid(&hpid, 3);
-//    db::HeapPageId hpid2(-1, 2);
-//    db::RecordId hrid2(&hpid2, 3);
-//    std::hash<db::RecordId> hasher;
-//    EXPECT_EQ(hasher(hrid), hasher(hrid2));
-//}
+TEST(RecordIdTest, HashCode) {
+    db::HeapPageId hpid(-1, 2);
+    db::RecordId hrid(&hpid, 3);
+    db::HeapPageId hpid2(-1, 2);
+    db::RecordId hrid2(&hpid2, 3);
+    std::hash<db::RecordId> hasher;
+    EXPECT_EQ(hasher(hrid), hasher(hrid2));
+}

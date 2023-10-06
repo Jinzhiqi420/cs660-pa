@@ -34,5 +34,10 @@ int RecordId::getTupleno() const {
 
 std::size_t std::hash<RecordId>::operator()(const RecordId &r) const {
     // TODO pa1.4: implement
+    std::size_t hash_val;
+    hash_val = std::hash<int>()(r.getTupleno())
+            + std::hash<int>()(r.getPageId()->getTableId())
+              + std::hash<int>()(r.getPageId()->pageNumber());
+    return hash_val;
 
 }
