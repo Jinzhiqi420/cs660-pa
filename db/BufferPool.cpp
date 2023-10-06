@@ -5,6 +5,7 @@ using namespace db;
 
 // TODO pa1.3: implement
 BufferPool::BufferPool(int numPages) {
+    this->numPages = numPages;
 }
 
 Page *BufferPool::getPage(const TransactionId &tid, PageId *pid) {

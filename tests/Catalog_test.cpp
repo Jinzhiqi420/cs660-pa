@@ -70,6 +70,7 @@ TEST(CatalogTest, HandleDuplicateIds) {
 
     db::SkeletonFile f(id1, db::Utility::getTupleDesc(2));
     db::Database::getCatalog().addTable(&f, name2);
+
     EXPECT_EQ(name2, db::Database::getCatalog().getTableName(id1));
     EXPECT_EQ(&f, db::Database::getCatalog().getDatabaseFile(id1));
 }

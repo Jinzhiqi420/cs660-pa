@@ -4,6 +4,7 @@
 #include <db/TupleDesc.h>
 #include <db/DbFile.h>
 #include <db/Utility.h>
+#include <map>
 
 namespace db {
 
@@ -24,6 +25,8 @@ namespace db {
      */
     class Catalog {
         // TODO pa1.2: add private members
+        std::map<const std::string, Table> tables;
+
     public:
         // disable copy
         Catalog(const Catalog &) = delete;

@@ -29,6 +29,8 @@ namespace db {
         /** Bytes per page, including header. */
         int pageSize = PAGE_SIZE;
         // TODO pa1.3: add private members
+        int numPages;
+        //std::map<PageId, Page> pages;
     public:
         BufferPool(const BufferPool &) = delete;
 
