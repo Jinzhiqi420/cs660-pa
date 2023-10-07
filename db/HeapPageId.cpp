@@ -1,4 +1,5 @@
 #include <db/HeapPageId.h>
+#include <iostream>
 
 using namespace db;
 

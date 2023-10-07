@@ -46,6 +46,7 @@ HeapPage::HeapPage(const HeapPageId &id, uint8_t *data) : pid(id) {
 
 int HeapPage::getNumTuples() {
     // TODO pa1.4: implement
+
 }
 
 int HeapPage::getHeaderSize() {
@@ -54,6 +55,7 @@ int HeapPage::getHeaderSize() {
 
 PageId &HeapPage::getId() {
     // TODO pa1.4: implement
+    return pid;
 }
 
 void HeapPage::readTuple(Tuple *t, uint8_t *data, int slotId) {

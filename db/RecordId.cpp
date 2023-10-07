@@ -1,5 +1,6 @@
 #include <db/RecordId.h>
 #include <stdexcept>
+#include <iostream>
 
 using namespace db;
 
@@ -15,7 +16,9 @@ RecordId::RecordId(const PageId *pid, int tupleno) {
 
 bool RecordId::operator==(const RecordId &other) const {
     // TODO pa1.4: implement
-    return (this->pid == other.getPageId()) && (this->tupleno == other.getTupleno());
+    return (this->pid->pageNumber() == other.getPageId()->pageNumber())
+            && (this->pid->getTableId() == other.getPageId()->getTableId())
+            && (this->tupleno == other.getTupleno());
 }
 
 const PageId *RecordId::getPageId() const {
