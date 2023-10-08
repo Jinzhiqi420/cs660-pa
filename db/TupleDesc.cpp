@@ -26,6 +26,10 @@ std::size_t std::hash<TDItem>::operator()(const TDItem &r) const {
 // TODO pa1.1: implement
 TupleDesc::TupleDesc(const std::vector<Types::Type> &types) {
     this->types = types;
+    this->names = std::vector<std::string>(types.size(), "");
+    for(int i = 0; i < types.size(); i++){
+        this->items.push_back(TDItem(types[i],names[i]));
+    }
 }
 
 // TODO pa1.1: implement
@@ -39,7 +43,8 @@ TupleDesc::TupleDesc(const std::vector<Types::Type> &types, const std::vector<st
 
 size_t TupleDesc::numFields() const {
     // TODO pa1.1: implement
-    return types.size();
+    //return types.size();
+    return items.size();
 }
 
 std::string TupleDesc::getFieldName(size_t i) const {
@@ -89,6 +94,11 @@ TupleDesc TupleDesc::merge(const TupleDesc &td1, const TupleDesc &td2) {
 
 std::string TupleDesc::to_string() const {
     // TODO pa1.1: implement
+    std::string td_str;
+    for(int i = 0; i < items.size(); i++){
+        td_str += items[i].to_string() + "; ";
+    }
+    return td_str;
 }
 
 bool TupleDesc::operator==(const TupleDesc &other) const {
@@ -104,13 +114,13 @@ bool TupleDesc::operator==(const TupleDesc &other) const {
     return true;
 }
 
-std::vector<TDItem>::iterator TupleDesc::begin() const {
-    return begin_itr;
+TupleDesc::iterator TupleDesc::begin() const {
+    return items.begin();
 }
 
-std::vector<TDItem>::iterator TupleDesc::end() const {
+TupleDesc::iterator TupleDesc::end() const {
     // TODO pa1.1: implement
-    return end_itr;
+    return items.end();
 }
 
 std::size_t std::hash<db::TupleDesc>::operator()(const db::TupleDesc &td) const {

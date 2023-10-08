@@ -41,8 +41,7 @@ namespace db {
         std::vector<std::string> names;
         std::vector<TDItem> items;
 
-        std::vector<TDItem>::iterator begin_itr = items.begin();
-        std::vector<TDItem>::iterator end_itr = items.end();
+        using iterator = std::vector<TDItem>::const_iterator;
         //using iterator = std::vector<TDItem>::iterator; // replace this with a container iterator or a custom iterator implementation
         // using iterator = void*; // replace void* with a container iterator or a custom iterator implementation
     public:
@@ -143,9 +142,10 @@ namespace db {
          */
         std::string to_string() const;
 
-        std::vector<TDItem>::iterator begin() const;
+        TupleDesc::iterator begin() const;
 
-        std::vector<TDItem>::iterator end() const;
+
+        TupleDesc::iterator end() const;
     };
 }
 

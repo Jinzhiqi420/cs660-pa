@@ -73,6 +73,7 @@ TEST(HeapPageReadTest, TestIterator) {
 
     int row = 0;
     for (const db::Tuple &tup: page) {
+        //std::cout << tup.to_string() << std::endl;
         const db::Field &f0 = tup.getField(0);
         const db::Field &f1 = tup.getField(1);
         if (const auto *if0 = dynamic_cast<const db::IntField *>(&f0)) {

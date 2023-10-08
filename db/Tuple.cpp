@@ -9,7 +9,7 @@ using namespace db;
 //
 
 // TODO pa1.1: implement
-Tuple::Tuple(const TupleDesc &td, RecordId *rid): td(td){
+Tuple::Tuple(const TupleDesc &td, RecordId *rid): td(&td){
     if (td.numFields() < 1) {
         throw std::invalid_argument("TupleDesc must have at least one field.");
     }
@@ -19,7 +19,7 @@ Tuple::Tuple(const TupleDesc &td, RecordId *rid): td(td){
 
 const TupleDesc &Tuple::getTupleDesc() const {
     // TODO pa1.1: implement
-    return td;
+    return *td;
 }
 
 const RecordId *Tuple::getRecordId() const {
@@ -43,7 +43,7 @@ const Field &Tuple::getField(int i) const {
 
 void Tuple::setField(int i, const Field *f) {
     // TODO pa1.1: implement
-    if (i < 0 || i >= td.numFields()) {
+    if (i < 0 || i >= td->numFields()) {
         throw std::invalid_argument("Index Out Of Range.");
     }
     this->contents[i] = f;
@@ -61,8 +61,17 @@ Tuple::iterator Tuple::end() const {
 
 std::string Tuple::to_string() const {
     // TODO pa1.1: implement
+    if(contents.empty()){
+        return "EMPTY TUPLE.";
+    }
+    std::string tp_str = "";
     for(int i = 0; i < contents.size(); i++){
         const Field *f = contents[i];
-        std::cout << f->to_string() << std::endl;
+        if(f == nullptr){
+            tp_str += "NULL; ";
+        }else{
+            tp_str += f->to_string() + "; ";
+        }
     }
+    return tp_str;
 }

@@ -14,7 +14,7 @@ namespace db {
     class Tuple {
         // TODO pa1.1: add private members
         std::vector< const Field*> contents;
-        const TupleDesc td;
+        const TupleDesc *td;
         const RecordId *rid;
         using iterator = std::vector<const Field*>::const_iterator; // replace this with a container iterator or a custom iterator implementation
 

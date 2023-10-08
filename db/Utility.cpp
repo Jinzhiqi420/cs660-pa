@@ -1,5 +1,6 @@
 #include <random>
 #include <db/Utility.h>
+#include <iostream>
 
 using namespace db;
 

@@ -1,4 +1,5 @@
 #include <db/HeapPage.h>
+#include <cmath>
 
 using namespace db;
 
@@ -36,8 +37,10 @@ HeapPage::HeapPage(const HeapPageId &id, uint8_t *data) : pid(id) {
     size_t offset = header_size;
 
     tuples = new Tuple[numSlots];
+    //std::cout << numSlots << std::endl;
     for (int slot = 0; slot < numSlots; slot++) {
         if (isSlotUsed(slot)) {
+            //std::cout << slot << std::endl;//COUT REACH EVERY SLOT
             readTuple(tuples + slot, data + offset, slot);
         }
         offset += td.getSize();
@@ -46,11 +49,17 @@ HeapPage::HeapPage(const HeapPageId &id, uint8_t *data) : pid(id) {
 
 int HeapPage::getNumTuples() {
     // TODO pa1.4: implement
-
+    //floor((BufferPool.getPageSize()*8) / (tuple size * 8 + 1))
+    int pgSize =Database::getBufferPool().getPageSize();
+    int tpSize = (int)Database::getCatalog().getTupleDesc(pid.getTableId()).getSize();
+    return floor((pgSize * 8) / (tpSize * 8 +1));
 }
 
 int HeapPage::getHeaderSize() {
     // TODO pa1.4: implement
+    //header bytes = page size - tuples per page * tuple size
+    return Database::getBufferPool().getPageSize() - (getNumTuples()*((int)Database::getCatalog().getTupleDesc(pid.getTableId()).getSize()));
+
 }
 
 PageId &HeapPage::getId() {
@@ -102,18 +111,31 @@ uint8_t *HeapPage::createEmptyPageData() {
     return new uint8_t[len]{}; // all 0
 }
 
+
 int HeapPage::getNumEmptySlots() const {
     // TODO pa1.4: implement
+    int NumEmptySlots = 0;
+    for(int i = 0; i < this->numSlots; i++){
+        if(!isSlotUsed(i)){
+            NumEmptySlots ++;
+        }
+    }
+    return NumEmptySlots;
 }
 
 bool HeapPage::isSlotUsed(int i) const {
     // TODO pa1.4: implement
+    return (header[i / 8] & (1 << (i % 8))) != 0;
 }
 
 HeapPageIterator HeapPage::begin() const {
     // TODO pa1.4: implement
+    HeapPageIterator begin_itr = HeapPageIterator(0,this);
+    return begin_itr;
 }
 
 HeapPageIterator HeapPage::end() const {
     // TODO pa1.4: implement
+    HeapPageIterator end_itr = HeapPageIterator(numSlots, this);
+    return end_itr;
 }
